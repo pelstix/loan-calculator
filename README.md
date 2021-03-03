@@ -19,7 +19,8 @@ This requires dotnet 5.0 SDK and Angular CLI 11.2.2
 
 ### Install packages
 ```
-npm --prefix ./banqsoft-web install ./banqsoft-web
+cd banqsoft-web
+npm install
 ```
 ```
 dotnet restore banqsoft-api
