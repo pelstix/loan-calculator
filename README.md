@@ -39,7 +39,9 @@ Web will start by default on port 4200
 
 ## Running tests
 ```
-npm run test --prefix banqsoft-web
+cd banqsoft-web
+npm run test
+npm run lint
 ```
 ```
 dotnet test banqsoft-api-test
