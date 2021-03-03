@@ -1,0 +1,126 @@
+<div class="container">
+
+    <form [formGroup]="formGroup" class="loan-calculator-form mat-elevation-z4">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Loan type</mat-label>
+            <mat-select formControlName="loanId" required>
+                <mat-option *ngFor="let loan of loanExtracts" [value]="loan.id">{{ loan.name }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.get('loanId').hasError('required')">
+                Loan type is required
+            </mat-error>
+        </mat-form-field>
+
+        <div class="input-container with-slider" *ngIf="formGroup.get('loanId').value !== null">
+            <mat-form-field appearance="fill">
+                <mat-label>Loan amount</mat-label>
+                <input
+                    #loanAmountValue
+                    type="number"
+                    formControlName="loanAmount"
+                    matInput
+                    required
+                    [attr.min]="loanAmountMin"
+                    [attr.max]="loanAmountMax"
+                    [attr.step]="loanAmountStep"
+                >
+                <span matPrefix>$&nbsp;</span>
+                <mat-error *ngIf="formGroup.get('loanAmount').hasError('required')">
+                    Loan amount is required
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('loanAmount').hasError('min')">
+                    Minimum allowed value is {{ formGroup.get('loanAmount').getError('min').min | currency }}
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('loanAmount').hasError('max')">
+                    Maximum allowed value is {{ formGroup.get('loanAmount').getError('max').max | currency }}
+                </mat-error>
+            </mat-form-field>
+            <mat-slider
+                thumbLabel
+                [displayWith]="formatAmount"
+                [min]="loanAmountMin"
+                [max]="loanAmountMax"
+                [step]="loanAmountStep"
+                [value]="loanAmountValue.value"
+                (change)="formGroup.get('loanAmount').setValue($event.value)"
+            ></mat-slider>
+        </div>
+        
+        <div class="input-container with-slider" *ngIf="formGroup.get('loanId').value !== null">
+            <mat-form-field appearance="fill">
+                <mat-label>Loan duration</mat-label>
+                <input
+                    #loanYearsDurationValue
+                    type="number"
+                    formControlName="loanYearsDuration"
+                    matInput
+                    required
+                    [attr.min]="loanYearsDurationMin"
+                    [attr.max]="loanYearsDurationMax"
+                    [attr.step]="loanYearsDurationStep"
+                >
+                <span matSuffix>years</span>
+                <mat-error *ngIf="formGroup.get('loanYearsDuration').hasError('required')">
+                    Loan duration is required
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('loanYearsDuration').hasError('min')">
+                    Minimum allowed value is {{ formGroup.get('loanYearsDuration').getError('min').min | currency }}
+                </mat-error>
+                <mat-error *ngIf="formGroup.get('loanYearsDuration').hasError('max')">
+                    Maximum allowed value is {{ formGroup.get('loanYearsDuration').getError('max').max | currency }}
+                </mat-error>
+            </mat-form-field>
+            <mat-slider
+                thumbLabel
+                [min]="loanYearsDurationMin"
+                [max]="loanYearsDurationMax"
+                [step]="loanYearsDurationStep"
+                [value]="loanYearsDurationValue.value"
+                (change)="formGroup.get('loanYearsDuration').setValue($event.value)"
+            ></mat-slider>
+        </div>
+    </form>
+
+    <div class="loan-calculator-result mat-elevation-z4">
+        <div *ngIf="errorOccurred" class="error">
+            An unexpected error occured, try again later.
+        </div>
+
+        <div *ngIf="isLoading" class="muted">
+            Loan payments calculation in progress
+        </div>
+
+        <div *ngIf="!loanPayments && !isLoading && !errorOccurred" class="muted">
+            Select loan type to load calculation
+        </div>
+
+        <div class="year-month-grid" *ngIf="!isLoading && loanPayments">
+            <div class="year labels">
+                <div class="header">&nbsp;</div>
+                <div 
+                    *ngFor="let label of labelNames"
+                    class="month"
+                >
+                    {{ label }}
+                </div>
+            </div>
+            <div *ngFor="let yearPayments of loanPayments | yearMonthGrid" class="year">
+                <div class="header">
+                    {{ yearPayments.year | date: 'yyyy' }}
+                </div>
+
+                <div *ngFor="let monthPayment of yearPayments.months" class="month">
+                    <span *ngIf="monthPayment === null" class="muted">&mdash;</span>
+                    <span *ngIf="monthPayment !== null">
+                        {{ monthPayment.value | currency }}
+                    </span>
+                </div>
+
+                <div class="month sum">
+                    {{ yearPayments.sum | currency }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

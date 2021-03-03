@@ -1,0 +1,60 @@
+
+.loan-calculator-form {
+    padding: 16px 32px;
+    border-radius: 8px;
+    display: flex;
+
+    .input-container {
+        flex: 0 50%;
+        padding: 0 32px;
+
+        mat-slider {
+            width: 100%;
+        }
+    }
+}
+
+.loan-calculator-result {
+    margin-top: 32px;
+    border-radius: 8px;
+    padding: 16px 32px;
+}
+
+.year-month-grid {
+    display: flex;
+    overflow: auto visible;
+
+    .year {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background: rgba(black, 0.02);
+        }
+
+        &.labels {
+            align-items: flex-end;
+        }
+
+        .header {
+            border-bottom: 1px solid #777;
+            width: 100%;
+            text-align: center;
+            padding: 8px 16px;
+        }
+
+        .month {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+    }
+
+    .labels, .header, .month.sum {
+        font-size: 13px;
+        font-weight: 700;
+    }
+}
+

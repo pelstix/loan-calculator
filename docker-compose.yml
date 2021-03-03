@@ -1,0 +1,14 @@
+services:
+  api:
+    image: banqsoft_api
+    build: ./banqsoft-api
+    ports:
+      - published: 4001
+        target: 80
+
+  web:
+    image: banqsoft_web
+    build: ./banqsoft-web
+    ports:
+      - published: 4000
+        target: 80
