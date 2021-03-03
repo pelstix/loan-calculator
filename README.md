@@ -12,6 +12,7 @@ Web application
 ```
 docker-compose up
 ```
+The web server will be available at `http://localhost:4000/` and api at `http://localhost:4001/`
 
 ## Run project without docker (development mode)
 This requires dotnet 5.0 SDK and Angular CLI 11.2.2
@@ -28,9 +29,12 @@ dotnet restore banqsoft-api
 ```
 dotnet run --project banqsoft-api
 ```
+Api will start by default on port 5001
 ```
-npm run start --prefix banqsoft-web
+cd banqsoft-web
+npm run start
 ```
+Web will start by default on port 4200
 
 ## Running tests
 ```
