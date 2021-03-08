@@ -43,8 +43,8 @@ steps:
   condition: succeededOrFailed()
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: '$(ProjectDirectory)/coverage/${ProjectName}/cobertura-coverage.xml'
-    failIfCoverageEmpty: true     
+    summaryFileLocation: '**/cobertura-coverage.xml'
+    failIfCoverageEmpty: true
 
 - task: PublishPipelineArtifact@0
   displayName: 'Publish artifacts'
