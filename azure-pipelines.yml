@@ -49,5 +49,5 @@ steps:
 - task: PublishPipelineArtifact@0
   displayName: 'Publish artifacts'
   inputs:
-    artifactName: '${ProjectName}'
-    targetPath: '$(ProjectDirectory)/dist/${ProjectName}'
+    artifactName: '$(ProjectName)'
+    targetPath: '$(ProjectDirectory)/dist/$(ProjectName)'
