@@ -17,9 +17,18 @@ steps:
 
 - script: |
     cd banqsoft-web
+  displayName: 'Set build path'
+
+- script: |
     npm install -g @angular/cli
     npm install
+  displayName: 'Install dependencies'
+
+- script: |
     ng lint
-    ng test
+  displayName: 'Linting'
+
+- script: |
     ng build --prod
-  displayName: 'npm install, test and build'
+  displayName: 'Build'
+  
