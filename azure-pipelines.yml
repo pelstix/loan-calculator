@@ -46,6 +46,11 @@ steps:
     summaryFileLocation: '**/cobertura-coverage.xml'
     failIfCoverageEmpty: true
 
+- script: |
+    npm run build:prod
+  displayName: 'Build project'
+  workingDirectory: '$(ProjectDirectory)/'
+
 - task: PublishPipelineArtifact@0
   displayName: 'Publish artifacts'
   inputs:
