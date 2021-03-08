@@ -27,7 +27,7 @@ steps:
   workingDirectory: '$(ProjectDirectory)/'
   
 - script: |
-    npm run test-ci
+    npm run test:ci
   displayName: 'Perform unit tests'
   workingDirectory: '$(ProjectDirectory)/'
 
@@ -49,7 +49,7 @@ steps:
 - task: ArchiveFiles@1
   displayName: 'Archive files '
   inputs:
-    rootFolder: '$(System.DefaultWorkingDirectory)/dist/angularHeroesFirebase' #name of your project on angular.json .defaultProject value
+    rootFolder: '$(System.DefaultWorkingDirectory)/dist/banqsoft-web'
     includeRootFolder: false
 
 - task: CopyFiles@2
