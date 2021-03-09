@@ -14,39 +14,3 @@ steps:
   inputs:
     versionSpec: '14.x'
   displayName: 'Install Node.js'
-
-- script: |
-    npm install -g @angular/cli
-    npm install
-  displayName: 'Install dependencies'
-  workingDirectory: '$(ProjectDirectory)/'
-
-- script: |
-    npm run lint
-  displayName: 'Perform linting'
-  workingDirectory: '$(ProjectDirectory)/'
-  
-- script: |
-    npm run test:ci
-  displayName: 'Perform unit tests'
-  workingDirectory: '$(ProjectDirectory)/'
-
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TESTS-*.xml'
-  displayName: 'Publish angular test results'
-
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage report'
-  condition: succeededOrFailed()
-  inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: '**/cobertura-coverage.xml'
-    failIfCoverageEmpty: true
-
-- script: |
-    npm run build:prod
-  displayName: 'Build project'
-  workingDirectory: '$(ProjectDirectory)/'
