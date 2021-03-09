@@ -12,6 +12,8 @@ pool:
 jobs:
 - job: web_ci
   displayName: 'Web CI'
+  strategy:
+    parallel: 1
   steps:
   - task: NodeTool@0
     inputs:
@@ -61,7 +63,9 @@ jobs:
       targetPath: '$(ProjectDirectory)/dist/$(ProjectName)'
 
 - job: api_ci
-  displayName: 'API CI'
+  displayName: 'Api CI'
+  strategy:
+    parallel: 1
   steps:
   - task: UseDotNet@2
     inputs:
