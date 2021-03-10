@@ -4,11 +4,15 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  ApiPath: 'banqsoft-api'
+  ApiName: 'banqsoft-api'
+  WebPath: 'banqsoft-web'
+  WebName: 'banqsoft-web'
+
 jobs:
 - job: web_ci
   displayName: 'Web CI'
-  strategy:
-    parallel: 1
   steps:
   - task: NodeTool@0
     inputs:
@@ -19,17 +23,17 @@ jobs:
       npm install -g @angular/cli
       npm install
     displayName: 'Install dependencies'
-    workingDirectory: '$(ProjectDirectory)/'
+    workingDirectory: '$(WebPath)/'
 
   - script: |
       npm run lint
     displayName: 'Perform linting'
-    workingDirectory: '$(ProjectDirectory)/'
+    workingDirectory: '$(WebPath)/'
     
   - script: |
       npm run test:ci
     displayName: 'Perform unit tests'
-    workingDirectory: '$(ProjectDirectory)/'
+    workingDirectory: '$(WebPath)/'
 
   - task: PublishTestResults@2
     condition: succeededOrFailed()
@@ -49,18 +53,16 @@ jobs:
   - script: |
       npm run build:prod
     displayName: 'Build project'
-    workingDirectory: '$(ProjectDirectory)/'
+    workingDirectory: '$(WebPath)/'
 
   - task: PublishPipelineArtifact@0
     displayName: 'Publish artifacts'
     inputs:
-      artifactName: '$(ProjectName)'
-      targetPath: '$(ProjectDirectory)/dist/$(ProjectName)'
+      artifactName: '$(WebName)'
+      targetPath: '$(WebPath)/dist/$(WebName)'
 
 - job: api_ci
   displayName: 'Api CI'
-  strategy:
-    parallel: 1
   steps:
   - task: UseDotNet@2
     inputs:
@@ -85,6 +87,7 @@ jobs:
     displayName: 'dotnet build'
     inputs:
       command: 'build'
+      arguments: '--project $(ApiPath)'
       configuration: $(buildConfiguration)
 
   - task: DotNetCoreCLI@2
@@ -97,5 +100,5 @@ jobs:
   - task: PublishBuildArtifacts@1
     inputs:
       pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-      artifactName: 'banqsoft-api'
+      artifactName: '$(ApiName)'
 
