@@ -10,6 +10,8 @@ out
 coverage
 # Only exists if Bazel was run
 bazel-out
+coverage
+TestResults
 
 # dependencies
 node_modules
