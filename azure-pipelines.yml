@@ -65,36 +65,37 @@ jobs:
   displayName: 'Api CI'
   steps:
   - task: UseDotNet@2
+    displayName: 'Install dotnet'
     inputs:
       version: '5.0.x'
       includePreviewVersions: true
 
   - task: DotNetCoreCLI@2
-    displayName: 'dotnet test'
+    displayName: 'Perform unit tests'
     inputs:
       command: 'test'
-      arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+      arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
       publishTestResults: true
       projects: 'banqsoft-api-test'
-  
+
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage report'
+    condition: succeededOrFailed()
     inputs:
-      codeCoverageTool: 'Cobertura'
-      summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '**/cobertura-coverage.xml'
+      failIfCoverageEmpty: true
 
   - task: DotNetCoreCLI@2
-    displayName: dotnet publish $(ApiName) --configuration $(buildConfiguration)
+    displayName: 'Publish project'
     name: PublishBackendProject
     inputs:
       command: publish
       projects: '$(ApiPath)/*.csproj'
       publishWebProjects: false
-      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(ApiName)'
+      arguments: '--output $(Build.ArtifactStagingDirectory)'
       zipAfterPublish: true
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-      artifactName: '$(ApiName)'
+  - publish: $(Build.ArtifactStagingDirectory)
+    artifact: '$(ApiName)'
 
