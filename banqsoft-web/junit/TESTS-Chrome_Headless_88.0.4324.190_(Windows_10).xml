@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<testsuite name="Chrome Headless 88.0.4324.190 (Windows 10)" package="" timestamp="2021-03-08T12:38:23" id="0" hostname="LAP197" tests="6" errors="0" failures="0" time="0.13">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/88.0.4324.190 Safari/537.36"/>
+  </properties>
+  <testcase name="LoanService should be created" time="0.012" classname="Chrome_Headless_88_0_4324_190_(Windows_10).LoanService"/>
+  <testcase name="YearMonthGridPipe create an instance" time="0.001" classname="Chrome_Headless_88_0_4324_190_(Windows_10).YearMonthGridPipe"/>
+  <testcase name="YearMonthGridPipe should transform array to year month grid" time="0.001" classname="Chrome_Headless_88_0_4324_190_(Windows_10).YearMonthGridPipe"/>
+  <testcase name="LoanCalculatorComponent should create" time="0.102" classname="Chrome_Headless_88_0_4324_190_(Windows_10).LoanCalculatorComponent"/>
+  <testcase name="AppComponent should create the app" time="0.009" classname="Chrome_Headless_88_0_4324_190_(Windows_10).AppComponent"/>
+  <testcase name="ApiInterceptor should append api url before path" time="0.005" classname="Chrome_Headless_88_0_4324_190_(Windows_10).ApiInterceptor"/>
+  <system-out>
+    <![CDATA[Chrome Headless 88.0.4324.190 (Windows 10) ERROR: 'NG0303: Can't bind to 'formGroup' since it isn't a known property of 'form'.'
+,Chrome Headless 88.0.4324.190 (Windows 10) ERROR: 'NG0304: 'mat-form-field' is not a known element:
+1. If 'mat-form-field' is an Angular component, then verify that it is part of this module.
+2. If 'mat-form-field' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,Chrome Headless 88.0.4324.190 (Windows 10) ERROR: 'NG0304: 'mat-label' is not a known element:
+1. If 'mat-label' is an Angular component, then verify that it is part of this module.
+2. If 'mat-label' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+,Chrome Headless 88.0.4324.190 (Windows 10) ERROR: 'NG0304: 'mat-select' is not a known element:
+1. If 'mat-select' is an Angular component, then verify that it is part of this module.
+2. If 'mat-select' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.'
+
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

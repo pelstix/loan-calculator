@@ -16,7 +16,7 @@ describe('LoanCalculatorComponent', () => {
         await TestBed.configureTestingModule({
             declarations: [LoanCalculatorComponent],
             imports: [
-                HttpClientTestingModule, 
+                HttpClientTestingModule,
                 MatSliderModule,
                 MatInputModule,
                 MatSelectModule,
