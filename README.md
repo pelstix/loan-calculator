@@ -1,8 +1,10 @@
-[![Build Status](https://dev.azure.com/trutkowski0349/loan-calculator/_apis/build/status/rutkowski-tomasz.loan-calculator?branchName=master)](https://dev.azure.com/trutkowski0349/loan-calculator/_build/latest?definitionId=2&branchName=master)
+[![Build Status](https://loan-calculator-organization.visualstudio.com/loan-calculator-project/_apis/build/status/rutkowski-tomasz.loan-calculator?branchName=master)](https://loan-calculator-organization.visualstudio.com/loan-calculator-project/_build/latest?definitionId=1&branchName=master)
 
 # LoanCalculator app
 Web application which can be used for calculation the cost of a housing loan
-(In progress) Azure CI/CD integration
+
+(In progress) Azure CI integration
+(In progress) Azure CD integration
 
 ## Application preview
 ![image](https://user-images.githubusercontent.com/11985426/109799518-6d52bf00-7c1c-11eb-99c5-205ddae29ac2.png)
