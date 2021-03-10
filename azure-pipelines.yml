@@ -74,7 +74,7 @@ jobs:
     displayName: 'Perform unit tests'
     inputs:
       command: 'test'
-      arguments: '--collect:\"XPlat Code Coverage\"'
+      arguments: '--collect:"XPlat Code Coverage"'
       publishTestResults: true
       projects: 'banqsoft-api-test'
 
