@@ -84,18 +84,14 @@ jobs:
       summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
 
   - task: DotNetCoreCLI@2
-    displayName: 'dotnet build'
-    inputs:
-      command: 'build'
-      arguments: '--project $(ApiPath)'
-      configuration: $(buildConfiguration)
-
-  - task: DotNetCoreCLI@2
+    displayName: dotnet publish $(ApiName) --configuration $(buildConfiguration)
+    name: PublishBackendProject
     inputs:
       command: publish
-      publishWebProjects: True
-      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-      zipAfterPublish: True
+      projects: '$(ApiPath)/*.csproj'
+      publishWebProjects: false
+      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(ApiName)'
+      zipAfterPublish: true
 
   - task: PublishBuildArtifacts@1
     inputs:
