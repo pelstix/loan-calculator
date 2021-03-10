@@ -70,13 +70,15 @@ jobs:
       version: '5.0.x'
       includePreviewVersions: true
 
-  - task: DotNetCoreCLI@2
+  - script: |
+      dotnet test --logger trx --collect "XPlat Code Coverage"
     displayName: 'Perform unit tests'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
     inputs:
-      command: 'test'
-      arguments: '--collect "XPlat Code Coverage"'
-      publishTestResults: true
-      projects: 'banqsoft-api-test'
+      testRunner: VSTest
+      testResultsFiles: '**/*.trx'
 
   - task: PublishCodeCoverageResults@1
     displayName: 'Publish code coverage report'
