@@ -84,7 +84,7 @@ jobs:
     inputs:
       codeCoverageTool: Cobertura
       summaryFileLocation: '**/coverage.cobertura.xml'
-      failIfCoverageEmpty: true
+      failIfCoverageEmpty: false
 
   - task: DotNetCoreCLI@2
     displayName: 'Publish project'
