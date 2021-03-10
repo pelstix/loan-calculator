@@ -55,3 +55,24 @@ npm run lint
 ```
 dotnet test banqsoft-api-test
 ```
+
+## Azure CI integration
+Integrated with azure pipelines - see azure-pipelines.yml file.
+
+Separate jobs were created to handle integration of both Web and Api project.
+| Web CI        | Api CI  |
+| ------------- |-------------|
+| ![image](https://user-images.githubusercontent.com/11985426/110608580-ac3cc380-818c-11eb-9475-c9c20288616c.png) | ![image](https://user-images.githubusercontent.com/11985426/110608734-caa2bf00-818c-11eb-90f5-8991e6e0a6a9.png) |
+| Duration: ~3m | Duration: ~1m |
+
+Both jobs perform unit tests and collect code coverage reports. Testing results are integrated with pipeline and displayed as data of each pipeline run.
+![image](https://user-images.githubusercontent.com/11985426/110609398-764c0f00-818d-11eb-97aa-4a7aa6964383.png)
+
+Unit tests results:
+![image](https://user-images.githubusercontent.com/11985426/110609523-95e33780-818d-11eb-94fc-b3a3278cd79b.png)
+
+Code coverage results:
+![image](https://user-images.githubusercontent.com/11985426/110609622-b14e4280-818d-11eb-8626-19f11b39a67e.png)
+
+
+
