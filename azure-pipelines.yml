@@ -73,6 +73,7 @@ jobs:
   - script: |
       dotnet test --logger trx --collect "XPlat Code Coverage"
     displayName: 'Perform unit tests'
+    workingDirectory: banqsoft-api-test
 
   - task: PublishTestResults@2
     displayName: 'Publish test results'
