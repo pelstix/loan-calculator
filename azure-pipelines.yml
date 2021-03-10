@@ -1,16 +1,101 @@
-# Node.js with Angular
-# Build a Node.js project that uses Angular.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 trigger:
 - master
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '14.x'
-  displayName: 'Install Node.js'
+jobs:
+- job: web_ci
+  displayName: 'Web CI'
+  strategy:
+    parallel: 1
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install -g @angular/cli
+      npm install
+    displayName: 'Install dependencies'
+    workingDirectory: '$(ProjectDirectory)/'
+
+  - script: |
+      npm run lint
+    displayName: 'Perform linting'
+    workingDirectory: '$(ProjectDirectory)/'
+    
+  - script: |
+      npm run test:ci
+    displayName: 'Perform unit tests'
+    workingDirectory: '$(ProjectDirectory)/'
+
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/TESTS-*.xml'
+    displayName: 'Publish angular test results'
+
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage report'
+    condition: succeededOrFailed()
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '**/cobertura-coverage.xml'
+      failIfCoverageEmpty: true
+
+  - script: |
+      npm run build:prod
+    displayName: 'Build project'
+    workingDirectory: '$(ProjectDirectory)/'
+
+  - task: PublishPipelineArtifact@0
+    displayName: 'Publish artifacts'
+    inputs:
+      artifactName: '$(ProjectName)'
+      targetPath: '$(ProjectDirectory)/dist/$(ProjectName)'
+
+- job: api_ci
+  displayName: 'Api CI'
+  strategy:
+    parallel: 1
+  steps:
+  - task: UseDotNet@2
+    inputs:
+      version: '5.0.x'
+      includePreviewVersions: true
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet test'
+    inputs:
+      command: 'test'
+      arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+      publishTestResults: true
+      projects: 'banqsoft-api-test'
+  
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage report'
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build'
+    inputs:
+      command: 'build'
+      configuration: $(buildConfiguration)
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: publish
+      publishWebProjects: True
+      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      zipAfterPublish: True
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+      artifactName: 'banqsoft-api'
+
