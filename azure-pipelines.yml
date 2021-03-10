@@ -74,7 +74,7 @@ jobs:
     displayName: 'Perform unit tests'
     inputs:
       command: 'test'
-      arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+      arguments: '--collect:"XPlat Code Coverage"'
       publishTestResults: true
       projects: 'banqsoft-api-test'
 
