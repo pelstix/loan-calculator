@@ -102,3 +102,38 @@ jobs:
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: '$(ApiName)'
     displayName: 'Publish artifacts'
+   
+#   - job: api_ci_deploy
+#     displayName: 'Api CI - Deploy to Azure Web App'
+#     dependsOn: api_ci
+#     condition: succeeded()
+#     steps:
+#       - task: AzureWebApp@1
+#         displayName: 'Deploy to Azure Web App'
+#         inputs:
+#           azureSubscription: '<your_azure_subscription>'
+#           appName: '<your_web_app_name>'
+#           package: '$(Build.ArtifactStagingDirectory)/$(ApiName)/**/*.zip'
+#           startApplication: true
+#           useWebDeploy: true
+#           startUpCommand: 'npm start'
+#           deploymentMethod: 'runFromPackage'
+#           runtimeStack: 'DOTNETCORE|5.0'
+          
+#   - job: web_ci_deploy
+#     displayName: 'Web CI - Deploy to Azure Web App'
+#     dependsOn: web_ci
+#     condition: succeeded()
+#     steps:
+#       - task: AzureWebApp@1
+#         displayName: 'Deploy to Azure Web App'
+#         inputs:
+#           azureSubscription: '<your_azure_subscription>'
+#           appName: '<your_web_app_name>'
+#           package: '$(Pipeline.Workspace)/$(WebName)/dist/$(WebName).zip'
+#           startUpCommand: 'npm start'
+#           startApplication: true
+#           useWebDeploy: true
+          
+          
+          
